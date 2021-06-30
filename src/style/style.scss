@@ -12,6 +12,7 @@ html{
 body{
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 400;
+
 }
 
 .calculator{
@@ -22,10 +23,7 @@ body{
   justify-items: center;
   grid-template-rows: minmax(200px 350px) 1fr;
   grid-template-columns: 1fr;
-
-  @media (max-width: 500px) {
-    width: 100%;
-  }
+  
 
   & .calculator__bg-color{
     background-color: #272727;
@@ -35,7 +33,7 @@ body{
     margin: auto;
     border-radius: 2rem;
 
-    @media (max-width: 500px) {
+    @media (max-width: 56.25em) {  // 56.25em = 900px
       width: 100%;
       height: 100%;
       border-radius: 0;
@@ -79,9 +77,6 @@ body{
     }
   }
 
-  & .calculator__outputs{
-    text-align: center;
-  }
 
   & .calculator__output{
     background-color: initial;
@@ -90,6 +85,7 @@ body{
     margin-top: .5rem;
     border: none;
     outline: none;
+    text-align: right;
 
     &:first-child{
       margin-top: 2em;
@@ -113,7 +109,7 @@ body{
     border-radius: 2rem;
     height: 100%;
 
-    @media (max-width: 500px) {
+    @media (max-width: 56.25em) {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       position: relative;
@@ -126,7 +122,7 @@ body{
     grid-template-columns: repeat(4, 1fr);
     margin: 2.2rem 2rem;
 
-    @media (max-width: 500px) {
+    @media (max-width: 56.25em) {
       margin: 2rem 2rem;
       position: absolute;
       width: 90%;
@@ -146,9 +142,10 @@ body{
     border: none;
     cursor: pointer;
 
-    @media (max-width: 500px) {
+    @media (max-width: 56.25em) {
       height: 5.5rem;
       width: 90%;
+      font-size: 2.5rem;
       margin: auto;
     }
   }

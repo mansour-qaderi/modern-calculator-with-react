@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function Calculator(){
     const [value, setValue] = useState("");
-    const [prevValue, setPrevValue] = useState("");
+    const [storedValue, setStoredValue] = useState("");
     const [functionality, setFunction] = useState("");
 
     const handleNumber = (e) => {
@@ -15,14 +15,9 @@ export default function Calculator(){
       setValue(value.concat(e.target.value));
     }
 
-    const handleSetStoredValue = () => {
-      setPrevValue(value);
-      setValue('');
-    };
-
     const handleAllclear = (e) => {
       setValue('');
-      setPrevValue('');
+      setStoredValue('');
     }
 
     const handleNavigate = () => {
@@ -33,21 +28,28 @@ export default function Calculator(){
           const positiveNumber = value.slice(1);
           setValue(positiveNumber);
         }
-      } else if (prevValue > 0) {
-          setPrevValue(`-${prevValue}`);
+      } else if (storedValue > 0) {
+          setStoredValue(`-${storedValue}`);
       } else {
-        const positiveNumber = prevValue.slice(1);
-          setPrevValue(positiveNumber);
+        const positiveNumber = storedValue.slice(1);
+          setStoredValue(positiveNumber);
       }
     };
 
     const handleFunctionality = type => {
+      const fun = type.target.value
+    
       if (value) {
-        setFunction(type.target.value);
-        handleSetStoredValue();
+        setFunction(fun);
+        setStoredValue(value + fun);
+        setValue('');
       }
-      if (prevValue) {
-        setFunction(type.target.value);
+      if (storedValue) {
+        setFunction(fun);
+        if(storedValue.length -1 !== fun){
+          const newValue = storedValue.slice(0 , storedValue.length-1);
+          setStoredValue(newValue + fun)   
+        }
       }
     }; 
 
@@ -58,22 +60,22 @@ export default function Calculator(){
       } 
     }
     const handleEqual = () => {
-      if (value && prevValue) {
+      if (value && storedValue) {
         switch (functionality) {
           case '+':
-            setPrevValue(`${Math.round(`${(parseFloat(prevValue) + parseFloat(value)) * 100}`) / 100}`);
+            setStoredValue(`${Math.round(`${(parseFloat(storedValue) + parseFloat(value)) * 100}`) / 100}`);
             break;
           case '-':
-            setPrevValue(`${Math.round(`${(parseFloat(prevValue) - parseFloat(value)) * 1000}`) / 1000}`);
+            setStoredValue(`${Math.round(`${(parseFloat(storedValue) - parseFloat(value)) * 1000}`) / 1000}`);
             break;
           case '/':
-            setPrevValue(`${Math.round(`${(parseFloat(prevValue) / parseFloat(value)) * 1000}`) / 1000}`);
+            setStoredValue(`${Math.round(`${(parseFloat(storedValue) / parseFloat(value)) * 1000}`) / 1000}`);
             break;
           case '*':
-            setPrevValue(`${Math.round(`${parseFloat(prevValue) * parseFloat(value) * 1000}`) / 1000}`);
+            setStoredValue(`${Math.round(`${parseFloat(storedValue) * parseFloat(value) * 1000}`) / 1000}`);
             break;
           case '%':
-            setPrevValue(`${Math.round(`${(parseFloat(prevValue) / 100) * parseFloat(value) * 1000}`) / 1000}`);
+            setStoredValue(`${Math.round(`${(parseFloat(storedValue) / 100) * parseFloat(value) * 1000}`) / 1000}`);
             break;
           default:
             break;
@@ -98,7 +100,7 @@ export default function Calculator(){
                           </div>
                       </div>
                       <div className="calculator__outputs">
-                          <input type="text" value={prevValue} className="calculator__output calculator__output--history" />
+                          <input type="text" value={storedValue} className="calculator__output calculator__output--history" />
                           <input type="text" value={value} className="calculator__output calculator__output--output" />
                       </div>
                   </div>
