@@ -2,6 +2,9 @@ import React from 'react';
 import '../style/style.scss';
 import 'material-icons/iconfont/material-icons.css';
 import { useState } from 'react';
+import ShowText from './showText';
+import Theme from './toggleSwitcher/theme'
+
 
 export default function Calculator(){
     const [value, setValue] = useState("");
@@ -46,10 +49,10 @@ export default function Calculator(){
       }
       if (storedValue) {
         setFunction(fun);
-        if(storedValue.length -1 !== fun){
-          const newValue = storedValue.slice(0 , storedValue.length-1);
-          setStoredValue(newValue + fun)   
-        }
+        // if(storedValue.length -1 !== fun && storedValue.length -1 !== {``}){
+        //   const newValue = storedValue.slice(0 , storedValue.length-1);
+        //   setStoredValue(newValue + fun)    
+        // }
       }
     }; 
 
@@ -90,18 +93,10 @@ export default function Calculator(){
                 <div className="calculator__main-conponents">
                   <div className="calculator__display">
                       <div className="calculator__display--icons">
-                          <div className="calculator__icons">
-                              <span className="light_mode calculator__icons--value material-icons-outlined">
-                                  light_mode
-                              </span>
-                              <span className="dark_mode calculator__icons--value material-icons-outlined">
-                                  dark_mode
-                              </span>
-                          </div>
+                        <Theme />
                       </div>
                       <div className="calculator__outputs">
-                          <input type="text" value={storedValue} className="calculator__output calculator__output--history" />
-                          <input type="text" value={value} className="calculator__output calculator__output--output" />
+                          <ShowText value={value} storedValue={storedValue} />
                       </div>
                   </div>
                   <div className="calculator__buttons">
@@ -131,6 +126,5 @@ export default function Calculator(){
                 </div>
             </div>
         </section>
-        
     )
 }
